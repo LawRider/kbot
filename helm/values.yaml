@@ -3,12 +3,10 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
 image:
   repository: "lawrider"
-  tag: "v1.0.4-5e18a4f"
+  tag: "v1.0.2-a0a12e7"
   arch: amd64
-  
 secret:
   name: "kbot"
   key: "token"
