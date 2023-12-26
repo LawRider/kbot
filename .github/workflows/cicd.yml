@@ -1,7 +1,7 @@
 name: KBOT-CICD
 
 on:
-  push
+  push:
     branches:
       - develop
 
