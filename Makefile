@@ -4,7 +4,7 @@ OS:=linux
 ARCH:=amd64
 EXT:=""
 DOCKER_HUB_USER:=lawrider
-GITHUB_USER:=LawRider
+GITHUB_USER:=lawrider
 
 format:
 	gofmt -s -w ./
