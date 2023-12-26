@@ -2,9 +2,9 @@ APP:=$(shell basename -s .git $(shell git remote get-url origin))
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 OS:=linux
 ARCH:=amd64
-#NAME:=kbot
 EXT:=""
-REGISTRY:=lawrider
+DOCKER_HUB_USER:=lawrider
+GITHUB_USER:=LawRider
 
 format:
 	gofmt -s -w ./
@@ -38,11 +38,14 @@ build: format get
 #	CGO_ENABLED=0 GOOS=windows GOARCH=${TARGETARCH} go build -v -o bin/kbot.exe -ldflags "-X="github.com/LawRider/kbot/cmd.appVersion=${VERSION}
 
 image:
-	docker build --target=${OS} --build-arg OS=${OS} --build-arg ARCH=${ARCH} --build-arg EXT=${EXT} --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-${ARCH} .
+	#docker build --target=${OS} --build-arg OS=${OS} --build-arg ARCH=${ARCH} --build-arg EXT=${EXT} --build-arg VERSION=${VERSION} -t ${DOCKER_HUB_USER}/${APP}:${VERSION}-${ARCH} .
+	docker build --target=${OS} --build-arg OS=${OS} --build-arg ARCH=${ARCH} --build-arg EXT=${EXT} --build-arg VERSION=${VERSION} -t ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${ARCH} .
 
 push:
-	docker push ${REGISTRY}/${APP}:${VERSION}-${ARCH}
+	#docker push ${DOCKER_HUB_USER}/${APP}:${VERSION}-${ARCH}
+	docker push ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${ARCH}
 
 clean:
 	rm -rf bin/
-	docker rmi ${REGISTRY}/${APP}:${VERSION}-${ARCH}
+	#docker rmi ${DOCKER_HUB_USER}/${APP}:${VERSION}-${ARCH}
+	docker rmi ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${ARCH}
