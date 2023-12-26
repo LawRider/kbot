@@ -38,14 +38,14 @@ build: format get
 #	CGO_ENABLED=0 GOOS=windows GOARCH=${TARGETARCH} go build -v -o bin/kbot.exe -ldflags "-X="github.com/LawRider/kbot/cmd.appVersion=${VERSION}
 
 image:
-	#docker build --target=${OS} --build-arg OS=${OS} --build-arg ARCH=${ARCH} --build-arg EXT=${EXT} --build-arg VERSION=${VERSION} -t ${DOCKER_HUB_USER}/${APP}:${VERSION}-${ARCH} .
-	docker build --target=${OS} --build-arg OS=${OS} --build-arg ARCH=${ARCH} --build-arg EXT=${EXT} --build-arg VERSION=${VERSION} -t ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${ARCH} .
+	#docker build --target=${OS} --build-arg OS=${OS} --build-arg ARCH=${ARCH} --build-arg EXT=${EXT} --build-arg VERSION=${VERSION} -t ${DOCKER_HUB_USER}/${APP}:${VERSION}-${OS}-${ARCH} .
+	docker build --target=${OS} --build-arg OS=${OS} --build-arg ARCH=${ARCH} --build-arg EXT=${EXT} --build-arg VERSION=${VERSION} -t ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${OS}-${ARCH} .
 
 push:
-	#docker push ${DOCKER_HUB_USER}/${APP}:${VERSION}-${ARCH}
-	docker push ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${ARCH}
+	#docker push ${DOCKER_HUB_USER}/${APP}:${VERSION}-${OS}-${ARCH}
+	docker push ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${OS}-${ARCH}
 
 clean:
 	rm -rf bin/
-	#docker rmi ${DOCKER_HUB_USER}/${APP}:${VERSION}-${ARCH}
-	docker rmi ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${ARCH}
+	#docker rmi ${DOCKER_HUB_USER}/${APP}:${VERSION}-${OS}-${ARCH}
+	docker rmi ghcr.io/${GITHUB_USER}/${APP}:${VERSION}-${OS}-${ARCH}
