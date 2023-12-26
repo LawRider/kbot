@@ -1,6 +1,9 @@
 name: KBOT-CICD
 
-on: push
+on:
+  push
+    branches:
+      - develop
 
 jobs:
   ci:
@@ -32,7 +35,6 @@ jobs:
       - name: Build & Push
         env:
           APP: "kbot"
-          REGISTRY: ${{ github.actor }}
         run: make image push
 
   cd:
