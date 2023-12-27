@@ -8,11 +8,12 @@ image:
   registry: "ghcr.io"
   repository: "lawrider/kbot"
   pullPolicy: IfNotPresent
-  tag: "v1.0.2-c617be6"
-  os: linux
-  arch: amd64
-  parameter: go
+  tag: "v1.0.4-5e18a4f"
+  os: "linux"
+  arch: "amd64"
+  parameter: "go"
+  
 secret:
-  name: "kbot"
-  key: "token"
-  env: "TELE_TOKEN"
+  name: "TELE_TOKEN"
+  tokenKey: "token"
+  tokenName: "kbot"
