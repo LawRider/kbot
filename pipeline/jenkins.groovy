@@ -9,6 +9,8 @@ pipeline {
     	GITHUB_TOKEN=credentials('github-token')
 	REPO = 'https://github.com/LawRider/kbot'
 	BRANCH = 'main'
+	PATH = "/usr/local/go/bin:$PATH"
+
     }
     
     stages {
