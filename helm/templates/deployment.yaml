@@ -44,8 +44,8 @@ spec:
             name: dev-mem
           image: {{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}-{{ .Values.image.os | default "linux" }}-{{ .Values.image.arch | default "amd64" }}
           env:
-          - name: {{ .Values.secret.env }}
+          - name: {{ .Values.secret.name }}
             valueFrom:
               secretKeyRef:
-                key: {{ .Values.secret.key }}
-                name: {{ .Values.secret.name }}
+                key: tokenKey
+                name: {{ .Values.secret.tokenName }}
