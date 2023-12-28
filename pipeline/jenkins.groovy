@@ -6,7 +6,8 @@ pipeline {
     }
     
     environment {
-    	REPO = 'https://github.com/LawRider/kbot'
+    	GITHUB_TOKEN=credentials('github-token')
+	REPO = 'https://github.com/LawRider/kbot'
 	BRANCH = 'main'
     }
     
@@ -42,7 +43,7 @@ pipeline {
 
 	stage('login to GHCR') {
             steps {
-                sh "echo $GITHUB_TOKEN_PASS | docker login ghcr.io -u $GITHUB_TOKEN_USER --password-stdin"
+                sh "echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin"
             }
         }
 
