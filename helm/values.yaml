@@ -1,0 +1,19 @@
+# Default values for helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+image:
+  #repository: "lawrider"
+  registry: "ghcr.io"
+  repository: "lawrider/kbot"
+  pullPolicy: IfNotPresent
+  tag: "v1.0.2-5739717"
+  os: "linux"
+  arch: "amd64"
+  parameter: "go"
+secret:
+  name: "TELE_TOKEN"
+  tokenKey: "token"
+  tokenName: "kbot"
+
