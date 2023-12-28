@@ -52,8 +52,6 @@ pipeline {
                 sh "make ${params.OS} ${params.ARCH} image push"
             }
         }
-
-        }
     }
 
     post {
