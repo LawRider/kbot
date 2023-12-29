@@ -23,21 +23,21 @@ pipeline {
 	stage('test') {
             steps {
                 echo "TEST EXECUTION STARTED"
-		sh 'make test'
+		sh "make test"
             }
         }
 
 	stage('build') {
             steps {
                 echo "BINARY BUILD EXECUTION STARTED FOR ${params.OS} (${params.ARCH})"
-                sh 'make ${params.OS} ${params.ARCH}'
+                sh "make ${params.OS} ${params.ARCH}"
             }
         }
 
 	stage('image') {
             steps {
                 echo "IMAGE BUILD EXECUTION STARTED FOR ${params.OS} (${params.ARCH})"
-                sh 'make image-${params.OS} ${params.ARCH}'
+                sh "make image-${params.OS} ${params.ARCH}"
             }
         }
 
@@ -56,7 +56,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker logout'
+            sh "docker logout"
         }
     }
 }
