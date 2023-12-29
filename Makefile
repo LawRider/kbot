@@ -1,3 +1,4 @@
+SHELL := /bin/bash
 APP = $(shell basename -s .git $(shell git remote get-url origin))
 VERSION = $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 ARGS1 := $(word 1,$(MAKECMDGOALS)) 
@@ -13,7 +14,7 @@ format:
 	gofmt -s -w ./
 
 lint:
-	golangci-lint
+	golint
 
 test:
 	go test -v
@@ -22,7 +23,7 @@ get:
 	go get
 
 build: format get
-	CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -v -o ${BUILD_DIR}/${APP}${EXT} -ldflags "-X="github.com/LawRider/kbot/cmd.appVersion=${VERSION}
+	CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -v -o ${BUILD_DIR}/${APP}${EXT} -ldflags "-X=github.com/LawRider/kbot/cmd.appVersion=${VERSION}"
 
 linux: build # linux (arm|arm64|amd|amd64)
 
@@ -56,3 +57,6 @@ clean-image:
 
 clean-all:
 	clean clean-image
+
+%::
+	@true
