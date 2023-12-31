@@ -1,5 +1,6 @@
 variables:
-  EXECUTION_IMAGE: "golang:1.21.5"
+  GO_IMAGE: "golang:1.21.5"
+  DOCKER_IMAGE: "docker:24.0.7"
   OS: "linux"
   ARCH: "amd64"
   BUILDS_DIR: "bin"
@@ -7,7 +8,7 @@ variables:
   
 default:
   image:
-    name: $EXECUTION_IMAGE
+    name: $GO_IMAGE
 
 stages:
   - vars
@@ -38,6 +39,7 @@ build-job:
 
 image-job:
   stage: image
+  image: $DOCKER_IMAGE
   script:
     - echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin
     - make $OS $ARCH image push
