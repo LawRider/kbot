@@ -2,63 +2,42 @@ variables:
   OS_CHOICES: "['linux', 'darwin', 'windows', 'all']"
   ARCH_CHOICES: "['amd64', 'arm64']"
   DEFAULT_BRANCH: "main"
-  REPO_URL: "https://gitlab.com/rusnipizda/kbot"
+  OS: "linux"
+  ARCH: "amd64"
+  BUILDS_DIR: "bin"
+  APP: "kbot"
 
-parameters:
-  OS:
-    type: string
-    default: 'all'
-    description: 'Pick OS'
-    values: $OS_CHOICES
-  ARCH:
-    type: string
-    default: 'amd64'
-    description: 'Pick ARCH'
-    values: $ARCH_CHOICES
-    
 stages:
-  - clone
+  - vars
   - test
   - build
   - image
-  - login
-  - push
+  
+vars-job:
+  stage: vars
+  script:
+    - echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> build.env
+    - echo "BUILD_URL=$(echo "${CI_REPOSITORY_URL}" | sed -E "s|https:\/\/.*@(.*)\.git|\1|")" >> build.env
+  artifacts:
+    reports:
+      dotenv: build.env
 
-kbot:
-  clone:
-    stage: clone
-    script:
-      - echo "CLONE REPOSITORY"
-      - git clone -b $BRANCH $REPO
+test-job:
+  stage: test
+  script:
+    - go test -v
 
-  test:
-    stage: test
-    script:
-      - echo "TEST EXECUTION STARTED"
-      - make test
+build-job:
+  stage: build
+  script:
+    - gofmt -s -w ./
+    - go get
+    - CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -v -o ${BUILD_DIR}/${APP} -ldflags "-X=${BUILD_URL}$/cmd.appVersion=${VERSION}"
 
-  build:
-    stage: build
-    script:
-      - echo "BINARY BUILD EXECUTION STARTED FOR $OS ($ARCH)
-      - make $OS $ARCH
-
-  image:
-    stage: image
-    script:
-      - echo "IMAGE BUILD EXECUTION STARTED FOR $OS ($ARCH)
-      - make image-$OS $ARCH
-
-  login:
-    stage: login
-    script:
-      - echo "LOGIN TO IMAGE REGISTRY"
-      - echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin
-
-  push:
-    stage: push
-    script:
-      - echo "PUSHING IMAGE STARTED"
-      - make $OS $ARCH image push
-    after_script:
-      - docker logout
+image-job:
+  stage: image
+  script:
+    - 
+    - echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin
+    - make $OS $ARCH image push
+    - docker logout
