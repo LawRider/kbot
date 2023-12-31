@@ -1,7 +1,4 @@
 variables:
-  OS_CHOICES: "['linux', 'darwin', 'windows', 'all']"
-  ARCH_CHOICES: "['amd64', 'arm64']"
-  DEFAULT_BRANCH: "main"
   OS: "linux"
   ARCH: "amd64"
   BUILDS_DIR: "bin"
