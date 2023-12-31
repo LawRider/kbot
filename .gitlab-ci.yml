@@ -4,6 +4,10 @@ variables:
   ARCH: "amd64"
   BUILDS_DIR: "bin"
   APP: "kbot"
+  
+default:
+  image:
+    name: $EXECUTION_IMAGE
 
 stages:
   - vars
