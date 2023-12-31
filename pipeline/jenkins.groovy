@@ -43,12 +43,14 @@ pipeline {
 
 	stage('login to GHCR') {
             steps {
+	    	echo "LOGIN TO IMAGE REGISTRY"
                 sh "echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin"
             }
         }
 
         stage('push image') {
             steps {
+	    	echo "PUSHING IMAGE STARTED"
                 sh "make ${params.OS} ${params.ARCH} image push"
             }
         }
