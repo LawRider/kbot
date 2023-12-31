@@ -40,7 +40,10 @@ build-job:
 image-job:
   stage: image
   image: $DOCKER_IMAGE
+  variables:
+    IMAGE_TAG: ${CI_REGISTRY_IMAGE}:${VERSION}-${OS}-${ARCH}
   script:
-    - echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin
-    - make $OS $ARCH image push
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker build . -t $IMAGE_TAG --build-arg OS=${OS} --build-arg ARCH=${ARCH}
+    - docker push $IMAGE_TAG
     - docker logout
