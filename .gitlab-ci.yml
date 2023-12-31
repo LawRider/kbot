@@ -1,8 +1,8 @@
 variables:
-  OS_CHOICES: ['linux', 'darwin', 'windows', 'all']
-  ARCH_CHOICES: ['amd64', 'arm64']
-  DEFAULT_BRANCH: 'main'
-  REPO_URL: 'https://gitlab.com/rusnipizda/kbot'
+  OS_CHOICES: "['linux', 'darwin', 'windows', 'all']"
+  ARCH_CHOICES: "['amd64', 'arm64']"
+  DEFAULT_BRANCH: "main"
+  REPO_URL: "https://gitlab.com/rusnipizda/kbot"
 
 parameters:
   OS:
