@@ -1,6 +1,7 @@
 variables:
   GO_IMAGE: "golang:1.21.5"
   DOCKER_IMAGE: "docker:24.0.7"
+  DOCKER_DIND_IMAGE: "docker:24.0.7-dind"
   OS: "linux"
   ARCH: "amd64"
   BUILDS_DIR: "bin"
@@ -40,6 +41,9 @@ build-job:
 image-job:
   stage: image
   image: $DOCKER_IMAGE
+  services:
+    - name: $DOCKER_DIND_IMAGE
+      alias: docker
   variables:
     IMAGE_TAG: ${CI_REGISTRY_IMAGE}:${VERSION}-${OS}-${ARCH}
   script:
