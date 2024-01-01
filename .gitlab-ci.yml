@@ -6,6 +6,8 @@ variables:
   ARCH: "amd64"
   BUILDS_DIR: "bin"
   APP: "kbot"
+  GIT_STRATEGY: clone
+  GIT_DEPTH: 0
   
 default:
   image:
@@ -37,7 +39,7 @@ build-job:
     - gofmt -s -w ./
     - go get
     - CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -v -o ${BUILD_DIR}/${APP} -ldflags "-X=${BUILD_URL}$/cmd.appVersion=${VERSION}"
-
+ 
 image-job:
   stage: image
   image: $DOCKER_IMAGE
